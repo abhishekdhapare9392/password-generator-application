@@ -1,7 +1,9 @@
 ### Password Generator - Single Page Application
 
-#### Tech Stack
+#### Technology Stack
 
     HTML5, Tailwind CSS (CDN), Vanilla JavaScript
 
-###### Note: This applicaiton is very basic purpose to learn the Basic JavaScript and mainly tailwind css.
+#### Demo Link: https://passwordgenerator.dhaparesolutions.in/
+
+###### Note: This application is very basic purpose to learn the Basic JavaScript and mainly tailwind css.
