@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator - Single Page Application</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <style>
+      .alert {
+        display: none;
+      }
+      #generatedPasswordBlock {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="h-screen flex justify-center items-center content-center">
+      <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2 text-center text-purple-700">
+            Random Password Generator
+          </div>
+          <hr />
+          <div
+            class="alert p-2 bg-red-200 text-red-900 transition delay-1000 duration-300 ease-in-out"
+          ></div>
+          <form class="password-generator-form">
+            <div class="flex py-2">
+              <span class="px-3">
+                <input type="checkbox" name="capital-text" id="capitalize" />
+              </span>
+              <label class="font-bold">Capital Text(A-Z)</label>
+            </div>
+            <div class="flex py-2">
+              <span class="px-3">
+                <input type="checkbox" name="small-text" id="small" />
+              </span>
+              <label class="font-bold">Small Text(a-z)</label>
+            </div>
+            <div class="flex py-2">
+              <span class="px-3">
+                <input type="checkbox" name="numaricals" id="numaric" />
+              </span>
+              <label class="font-bold">Numaricals(1-9)</label>
+            </div>
+            <div class="flex py-2">
+              <span class="px-3">
+                <input type="checkbox" name="symbols" id="symbol" />
+              </span>
+              <label class="font-bold">Symbols(eg. !,$,@,# etc.)</label>
+            </div>
+            <div class="flex py-2">
+              <span class="px-3 w-full">
+                <input
+                  type="number"
+                  name="length"
+                  id="length"
+                  placeholder="Password Length"
+                  class="w-full p-2 border-2 border-solid focus:outline focus:outline-1 focus:outline-purple-700 focus:border-purple-700"
+                />
+              </span>
+            </div>
+            <div class="flex px-2 py-2 justify-center">
+              <button
+                type="button"
+                class="w-full p-3 bg-purple-700 text-white font-bold shadow-xl hover:bg-purple-900 hover:scale-95 active:scale-95"
+                id="generate-password"
+              >
+                Generate Password
+              </button>
+            </div>
+            <div class="p-4 text-center" id="generatedPasswordBlock">
+              <h3 class="text-2xl">Genereated Password is:</h3>
+              <br />
+              <p id="generatedPasswordString" class="text-center text-2xl"></p>
+              <div class="flex my-3 justify-center">
+                <button
+                  type="button"
+                  class="w-full py-2 px-3 bg-purple-700 text-white font-bold shadow-xl hover:bg-purple-900 hover:scale-95"
+                  id="reset"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      let generateBtn = document.querySelector("#generate-password");
+      let capitalize = document.querySelector("#capitalize");
+      let small = document.querySelector("#small");
+      let numaric = document.querySelector("#numaric");
+      let symbol = document.querySelector("#symbol");
+      let passwordLength = document.querySelector("#length");
+      let password = "";
+
+      generateBtn.addEventListener("click", () => {
+        if (
+          capitalize.checked === false &&
+          small.checked === false &&
+          numaric.checked === false &&
+          symbol.checked === false
+        ) {
+          const text =
+            "<p>Please check atleast one of the following options.</p>";
+          document.querySelector(".alert").innerHTML = text;
+          document.querySelector(".alert").style.display = "block";
+          setTimeout(() => {
+            document.querySelector(".alert").innerHTML = "";
+            document.querySelector(".alert").style.display = "none";
+          }, 5000);
+        } else if (passwordLength.value < 9 || passwordLength.value > 15) {
+          const text =
+            "<p>Password length should be greater than 9 and less than 15.</p>";
+          document.querySelector(".alert").innerHTML = text;
+          document.querySelector(".alert").style.display = "block";
+          setTimeout(() => {
+            document.querySelector(".alert").innerHTML = "";
+            document.querySelector(".alert").style.display = "none";
+          }, 5000);
+        } else {
+          let capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          let smallLetters = "abcdefghijklmnopqrstuvwxyz";
+          let numaricNumbers = "0123456789";
+          let symbolLetters = "!@#$";
+          let combineString = "";
+          if (capitalize.checked === true) {
+            combineString += capitalLetters;
+          }
+          if (small.checked === true) {
+            combineString += smallLetters;
+          }
+          if (numaric.checked === true) {
+            combineString += numaricNumbers;
+          }
+          if (symbol.checked === true) {
+            combineString += symbolLetters;
+          }
+
+          for (let i = 1; i <= passwordLength.value; i++) {
+            let char = Math.floor(Math.random() * combineString.length);
+            password += combineString.charAt(char);
+          }
+          console.log(password);
+          document.querySelector("#generatedPasswordBlock").style.display =
+            "block";
+          document.querySelector("#generatedPasswordString").innerText =
+            password;
+        }
+      });
+      document.querySelector("#reset").addEventListener("click", () => {
+        capitalize.checked = false;
+        small.checked = false;
+        numaric.checked = false;
+        symbol.checked = false;
+        passwordLength.value = 0;
+        document.querySelector("#generatedPasswordBlock").style.display =
+          "none";
+        document.querySelector("#generatedPasswordString").innerText = "";
+        window.location.reload();
+      });
+    </script>
+  </body>
+</html>
