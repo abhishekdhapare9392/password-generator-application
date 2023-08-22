@@ -4,6 +4,6 @@
 
     HTML5, Tailwind CSS (CDN), Vanilla JavaScript
 
-#### Demo Link: https://passwordgenerator.dhaparesolutions.in/
+<a href="https://passwordgenerator.dhaparesolutions.in/" target="_blank">Demo Link</a>
 
 ###### Note: This application is very basic purpose to learn the Basic JavaScript and mainly tailwind css.
